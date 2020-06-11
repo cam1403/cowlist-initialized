@@ -26,6 +26,26 @@ let insertCow = (name, description) => {
   );
 };
 
+let getCowNames = () => {
+  connection.query(`SELECT name FROM cows`, (err, results, fields) => {
+    if (err) throw err;
+    return results;
+  });
+};
+
+let getCowDescription = (name) => {
+  connection.query(
+    `SELECT description FROM cows where name='${name}'`,
+    (err, results, fields) => {
+      if (err) throw err;
+      return results;
+    }
+  );
+};
 connection.end(() => {
-  console.log();
+  console.log('Db connection ended');
 });
+
+module.exports.getCowNames = getCowNames;
+module.exports.getCowDescription = getCowDescription;
+module.exports.insertCow = insertCow;
